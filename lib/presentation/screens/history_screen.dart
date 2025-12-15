@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../core/theme/theme_helper.dart';
 import '../controllers/history_controller.dart';
 import '../widgets/common/empty_state.dart';
 import '../widgets/history/history_tile.dart';
@@ -13,11 +14,17 @@ class HistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan History'),
+        title: Text(
+          'Scan History',
+          style: TextStyle(color: ThemeHelper.textPrimaryColor(context)),
+        ),
         actions: [
           Obx(() => controller.history.isNotEmpty
               ? IconButton(
-            icon: const Icon(Icons.delete_sweep_rounded),
+            icon: Icon(
+              Icons.delete_sweep_rounded,
+              color: ThemeHelper.textPrimaryColor(context),
+            ),
             onPressed: () => _showClearDialog(context, controller),
           )
               : const SizedBox()),
@@ -39,16 +46,21 @@ class HistoryScreen extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).cardTheme.color,
+              color: ThemeHelper.cardColor(context),
               borderRadius: BorderRadius.circular(16),
             ),
             child: TextField(
               onChanged: (value) => controller.searchQuery.value = value,
-              decoration: const InputDecoration(
+              style: TextStyle(color: ThemeHelper.textPrimaryColor(context)),
+              decoration: InputDecoration(
                 hintText: 'Search seeds...',
-                prefixIcon: Icon(Icons.search),
+                hintStyle: TextStyle(color: ThemeHelper.textSecondaryColor(context)),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: ThemeHelper.textSecondaryColor(context),
+                ),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.all(16),
+                contentPadding: const EdgeInsets.all(16),
               ),
             ),
           ),
@@ -57,10 +69,9 @@ class HistoryScreen extends StatelessWidget {
             height: 40,
             child: Obx(() => ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: controller.filters.value.length,
+              itemCount: controller.filters.length,
               itemBuilder: (context, index) {
-                var selected=controller.selectedFilter.value;
-                final filter = controller.filters.value[index];
+                final filter = controller.filters[index];
                 final isSelected = controller.selectedFilter.value == filter;
                 return _FilterChip(
                   label: filter,
@@ -97,8 +108,15 @@ class HistoryScreen extends StatelessWidget {
   void _showClearDialog(BuildContext context, HistoryController controller) {
     Get.dialog(
       AlertDialog(
-        title: const Text('Clear History'),
-        content: const Text('Are you sure you want to delete all scan history?'),
+        backgroundColor: ThemeHelper.cardColor(context),
+        title: Text(
+          'Clear History',
+          style: TextStyle(color: ThemeHelper.textPrimaryColor(context)),
+        ),
+        content: Text(
+          'Are you sure you want to delete all scan history?',
+          style: TextStyle(color: ThemeHelper.textSecondaryColor(context)),
+        ),
         actions: [
           TextButton(onPressed: Get.back, child: const Text('Cancel')),
           TextButton(
@@ -135,13 +153,13 @@ class _FilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).cardTheme.color,
+              : ThemeHelper.cardColor(context),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface,
+            color: isSelected ? Colors.white : ThemeHelper.textPrimaryColor(context),
             fontWeight: FontWeight.w600,
           ),
         ),

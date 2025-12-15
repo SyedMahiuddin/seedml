@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app/routes/app_routes.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/theme/theme_helper.dart';
 import '../../../core/utils/helpers.dart';
 import '../../../data/models/scan_result.dart';
 import '../../controllers/history_controller.dart';
@@ -27,7 +28,7 @@ class HistoryTile extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Theme.of(context).cardTheme.color,
+            color: ThemeHelper.cardColor(context),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -86,20 +87,24 @@ class HistoryTile extends StatelessWidget {
       children: [
         Text(
           result.label,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: ThemeHelper.textPrimaryColor(context),
+          ),
         ),
         const SizedBox(height: 4),
         Text(
           Helpers.formatDate(result.timestamp),
           style: TextStyle(
             fontSize: 12,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: ThemeHelper.textSecondaryColor(context),
           ),
         ),
         const SizedBox(height: 8),
         LinearProgressIndicator(
           value: result.confidence,
-          backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+          backgroundColor: confidenceColor.withOpacity(0.1),
           valueColor: AlwaysStoppedAnimation(confidenceColor),
           borderRadius: BorderRadius.circular(4),
         ),
@@ -117,7 +122,7 @@ class HistoryTile extends StatelessWidget {
           IconButton(
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite ? Colors.red : Colors.grey,
+              color: isFavorite ? Colors.red : ThemeHelper.textSecondaryColor(context),
             ),
             onPressed: () => controller.toggleFavorite(result.id),
           ),

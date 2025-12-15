@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app/routes/app_routes.dart';
-import '../../../core/constants/seed_data.dart';
+import '../../../core/theme/theme_helper.dart';
 import '../../../core/utils/helpers.dart';
 import '../../../data/models/scan_result.dart';
 import '../common/confidence_badge.dart';
@@ -14,15 +14,13 @@ class RecentScanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final info = SeedData.getInfo(result.label);
-
     return GestureDetector(
       onTap: () => Get.toNamed(AppRoutes.resultDetail, arguments: result),
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).cardTheme.color,
+          color: ThemeHelper.cardColor(context),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -44,9 +42,10 @@ class RecentScanTile extends StatelessWidget {
                 children: [
                   Text(
                     result.label,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      color: ThemeHelper.textPrimaryColor(context),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -54,7 +53,7 @@ class RecentScanTile extends StatelessWidget {
                     Helpers.formatDate(result.timestamp),
                     style: TextStyle(
                       fontSize: 12,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      color: ThemeHelper.textSecondaryColor(context),
                     ),
                   ),
                 ],

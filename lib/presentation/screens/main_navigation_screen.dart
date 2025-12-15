@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../core/theme/theme_helper.dart';
 import '../controllers/navigation_controller.dart';
 import 'home_screen.dart';
 import 'history_screen.dart';
@@ -30,7 +31,7 @@ class MainNavigationScreen extends StatelessWidget {
   Widget _buildBottomNav(BuildContext context, NavigationController controller) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardTheme.color,
+        color: ThemeHelper.cardColor(context),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -98,9 +99,9 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected
-        ? Theme.of(context).colorScheme.primary
-        : Theme.of(context).colorScheme.primary.withOpacity(0.5);
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final inactiveColor = ThemeHelper.textSecondaryColor(context);
+    final color = isSelected ? primaryColor : inactiveColor;
 
     return GestureDetector(
       onTap: onTap,
@@ -108,9 +109,7 @@ class _NavItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
-              : Colors.transparent,
+          color: isSelected ? primaryColor.withOpacity(0.1) : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

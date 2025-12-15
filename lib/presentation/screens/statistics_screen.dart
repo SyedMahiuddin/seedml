@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/constants/seed_data.dart';
+import '../../core/theme/theme_helper.dart';
 import '../../core/utils/helpers.dart';
 import '../controllers/history_controller.dart';
 import '../widgets/common/empty_state.dart';
@@ -14,7 +15,12 @@ class StatisticsScreen extends StatelessWidget {
     final controller = Get.find<HistoryController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Statistics')),
+      appBar: AppBar(
+        title: Text(
+          'Statistics',
+          style: TextStyle(color: ThemeHelper.textPrimaryColor(context)),
+        ),
+      ),
       body: Obx(() {
         if (controller.totalScans == 0) {
           return const EmptyState(
@@ -101,7 +107,7 @@ class StatisticsScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: ThemeHelper.textPrimaryColor(context),
           ),
         ),
         const SizedBox(height: 16),
@@ -114,7 +120,7 @@ class StatisticsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Theme.of(context).cardTheme.color,
+              color: ThemeHelper.cardColor(context),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -129,14 +135,17 @@ class StatisticsScreen extends StatelessWidget {
                         const SizedBox(width: 12),
                         Text(
                           entry.key,
-                          style: const TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: ThemeHelper.textPrimaryColor(context),
+                          ),
                         ),
                       ],
                     ),
                     Text(
                       '${entry.value} (${(percentage * 100).toStringAsFixed(1)}%)',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                        color: ThemeHelper.textSecondaryColor(context),
                       ),
                     ),
                   ],
@@ -175,7 +184,7 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardTheme.color,
+        color: ThemeHelper.cardColor(context),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -188,7 +197,7 @@ class _StatCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: ThemeHelper.textPrimaryColor(context),
             ),
           ),
           const SizedBox(height: 4),
@@ -196,7 +205,7 @@ class _StatCard extends StatelessWidget {
             label,
             style: TextStyle(
               fontSize: 14,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: ThemeHelper.textSecondaryColor(context),
             ),
           ),
         ],

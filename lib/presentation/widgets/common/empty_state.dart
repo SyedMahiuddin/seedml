@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/theme_helper.dart';
 
 class EmptyState extends StatelessWidget {
   final IconData icon;
@@ -33,7 +34,7 @@ class EmptyState extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: ThemeHelper.textPrimaryColor(context),
               ),
               textAlign: TextAlign.center,
             ),
@@ -44,7 +45,7 @@ class EmptyState extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  color: ThemeHelper.textSecondaryColor(context),
                 ),
               ),
             ],

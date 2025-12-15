@@ -10,8 +10,14 @@ abstract class AppColors {
   static const cardLight = Colors.white;
   static const cardDark = Color(0xFF161B22);
 
-  static const textPrimaryLight = Color(0xFFF8F8FB);
+  static const surfaceLight = Colors.white;
+  static const surfaceDark = Color(0xFF1C2128);
+
+  static const textPrimaryLight = Color(0xFF1A1A2E);
   static const textPrimaryDark = Colors.white;
+
+  static const textSecondaryLight = Color(0xFF6B7280);
+  static const textSecondaryDark = Color(0xFF9CA3AF);
 
   static const success = Color(0xFF4CAF50);
   static const warning = Color(0xFFFF9800);

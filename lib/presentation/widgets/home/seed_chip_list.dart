@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/seed_data.dart';
+import '../../../core/theme/theme_helper.dart';
 
 class SeedChipList extends StatelessWidget {
   const SeedChipList({super.key});
@@ -14,7 +15,7 @@ class SeedChipList extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: ThemeHelper.textPrimaryColor(context),
           ),
         ),
         const SizedBox(height: 12),
@@ -48,7 +49,7 @@ class _SeedChip extends StatelessWidget {
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardTheme.color,
+        color: ThemeHelper.cardColor(context),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: color.withOpacity(0.3), width: 2),
       ),
@@ -67,7 +68,11 @@ class _SeedChip extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             name,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: ThemeHelper.textPrimaryColor(context),
+            ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/theme_helper.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
@@ -22,7 +23,7 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardColor = color ?? Theme.of(context).cardTheme.color;
+    final cardColor = color ?? ThemeHelper.cardColor(context);
 
     return Container(
       margin: margin,
