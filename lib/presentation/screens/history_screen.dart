@@ -33,7 +33,7 @@ class HistoryScreen extends StatelessWidget {
       body: Column(
         children: [
           _buildSearchAndFilters(context, controller),
-          Expanded(child: _buildHistoryList(controller)),
+          Expanded(child: _buildHistoryList(context, controller)),
         ],
       ),
     );
@@ -50,7 +50,7 @@ class HistoryScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: TextField(
-              onChanged: (value) => controller.searchQuery.value = value,
+              onChanged: (value) => controller.setSearchQuery(value),
               style: TextStyle(color: ThemeHelper.textPrimaryColor(context)),
               decoration: InputDecoration(
                 hintText: 'Search seeds...',
@@ -67,26 +67,24 @@ class HistoryScreen extends StatelessWidget {
           const SizedBox(height: 12),
           SizedBox(
             height: 40,
-            child: Obx(() => ListView.builder(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: controller.filters.length,
               itemBuilder: (context, index) {
                 final filter = controller.filters[index];
-                final isSelected = controller.selectedFilter.value == filter;
                 return _FilterChip(
                   label: filter,
-                  isSelected: isSelected,
-                  onTap: () => controller.selectedFilter.value = filter,
+                  controller: controller,
                 );
               },
-            )),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildHistoryList(HistoryController controller) {
+  Widget _buildHistoryList(BuildContext context, HistoryController controller) {
     return Obx(() {
       final filtered = controller.filteredHistory;
 
@@ -134,36 +132,46 @@ class HistoryScreen extends StatelessWidget {
 
 class _FilterChip extends StatelessWidget {
   final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
+  final HistoryController controller;
 
   const _FilterChip({
     required this.label,
-    required this.isSelected,
-    required this.onTap,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : ThemeHelper.cardColor(context),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : ThemeHelper.textPrimaryColor(context),
-            fontWeight: FontWeight.w600,
+    return Obx(() {
+      final isSelected = controller.selectedFilter.value == label;
+
+      return GestureDetector(
+        onTap: () => controller.setFilter(label),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          margin: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary
+                : ThemeHelper.cardColor(context),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : ThemeHelper.textSecondaryColor(context).withOpacity(0.2),
+              width: 2,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.white : ThemeHelper.textPrimaryColor(context),
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

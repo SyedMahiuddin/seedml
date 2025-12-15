@@ -10,12 +10,16 @@ class HistoryController extends GetxController {
   final searchQuery = ''.obs;
   final selectedFilter = 'All'.obs;
 
-  List<ScanResult> get history => _history;
+  RxList<ScanResult> get history => _history;
 
-  RxList<String> get filters => ['All', 'Favorites', 'Recent', 'High Confidence'].obs;
+  List<String> get filters => ['All', 'Favorites', 'Recent', 'High Confidence'];
 
   List<ScanResult> get filteredHistory {
-    var filtered = _history.toList();
+    searchQuery.value;
+    selectedFilter.value;
+    _history.length;
+
+    var filtered = List<ScanResult>.from(_history);
 
     if (searchQuery.value.isNotEmpty) {
       filtered = filtered
@@ -34,6 +38,8 @@ class HistoryController extends GetxController {
       case 'High Confidence':
         filtered = filtered.where((r) => r.confidence >= 0.8).toList();
         break;
+      default:
+        filtered.sort((a, b) => b.timestamp.compareTo(a.timestamp));
     }
 
     return filtered;
@@ -82,6 +88,7 @@ class HistoryController extends GetxController {
       _history[index] = _history[index].copyWith(
         isFavorite: !_history[index].isFavorite,
       );
+      _history.refresh();
       _saveHistory();
     }
   }
@@ -105,6 +112,14 @@ class HistoryController extends GetxController {
     }
     _history.clear();
     _saveHistory();
+  }
+
+  void setFilter(String filter) {
+    selectedFilter.value = filter;
+  }
+
+  void setSearchQuery(String query) {
+    searchQuery.value = query;
   }
 
   ScanResult? getResultById(String id) {
