@@ -8,6 +8,24 @@ It features a polished multi-screen UI, local history, statistics, and dark/ligh
 
 ## 📷 Screenshots
 
+All screenshots are stored in the `screenshots` directory of this project:
+
+- `screenshots/home.png`
+- `screenshots/scan.png`
+- `screenshots/history.png`
+- `screenshots/stats.png`
+- `screenshots/settings.png`
+
+```text
+screenshots/
+  home.png
+  scan.png
+  history.png
+  stats.png
+  settings.png
+```
+
+Embedded in the README:
 
 <p align="center">
   <img src="screenshots/home.png" alt="Home Screen" width="250"/>
