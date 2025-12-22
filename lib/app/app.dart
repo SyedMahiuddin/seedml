@@ -19,7 +19,7 @@ class SeedAIApp extends StatelessWidget {
         themeMode: themeController.themeMode,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
-        initialRoute: AppRoutes.main,
+        initialRoute: AppRoutes.splash,
         getPages: AppPages.pages,
       ),
     );
